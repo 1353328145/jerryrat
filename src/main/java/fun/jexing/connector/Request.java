@@ -9,7 +9,24 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Request implements HttpRequest{
-    private char[] requsetChars;
+    private RequestStringParser parser;
+    private Cookie[] cookies;
+    public RequestStringParser getParser() {
+        return parser;
+    }
+
+    public void setParser(RequestStringParser parser) {
+        this.parser = parser;
+    }
+
+    public Cookie[] getCookies() {
+        return cookies;
+    }
+
+    public void setCookies(Cookie[] cookies) {
+        this.cookies = cookies;
+    }
+
     public Object getAttribute(String var1) {
         return null;
     }

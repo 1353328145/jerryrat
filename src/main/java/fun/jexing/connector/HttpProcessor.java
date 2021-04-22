@@ -2,14 +2,15 @@ package fun.jexing.connector;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.OutputStream;;
 import java.net.Socket;
+import java.util.Map;
 
 public class HttpProcessor implements Runnable{
     private HttpConnector connector;
     private Socket socket;
     private boolean isKeepAlive;
+    private RequestStringParser parser;
     private BufferedInputStream input;
     private OutputStream output;
     HttpProcessor(HttpConnector connector,Socket socket){
@@ -39,28 +40,36 @@ public class HttpProcessor implements Runnable{
     private void parseConnection(){
 
     }
-    private void parseRequest(){
-        //从inputStream读出数据并解析
-        RequestStringParser parser = getParser();
-
-    }
-    private void parseHeaders(){
-
-    }
     public void process(){
+        //创建请求对象
         Request request = new Request();
+
+        //创建响应对象
         Response response = new Response(output);
         response.setRequest(request);
-        //解析请求
-        parseRequest();
+        //解析请求 , 从inputStream读出数据并解析
+        parser = getParser();
+        request.setParser(parser);
+        Map<String, String> headerMap = parser.getHeaderMap();
+        //处理cookie
+        String cookie = headerMap.get("Cookie");
+        if (cookie != null){
+            Cookie[] cookies = Cookie.parseCookieHeader(cookie);
+            request.setCookies(cookies);
+        }
+        if (false){
+            //处理servlet
+        }else{
+            //处理静态资源
+        }
         //如果保持连接
-//        if (!isKeepAlive){
+        if (!isKeepAlive){
             try {
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//        }
+        }
     }
 
     public void run() {

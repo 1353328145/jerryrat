@@ -8,6 +8,7 @@ import java.util.Locale;
 public class Response implements HttpResponse{
     private Request request;
     private OutputStream output;
+    private PrintWriter writer;
     Response(OutputStream output){
         this.output = output;
     }
@@ -28,7 +29,10 @@ public class Response implements HttpResponse{
     }
 
     public PrintWriter getWriter() throws IOException {
-        return null;
+        if (writer == null){
+            writer = new PrintWriter(output,true);
+        }
+        return writer;
     }
 
     public void setCharacterEncoding(String var1) {
