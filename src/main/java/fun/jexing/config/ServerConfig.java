@@ -8,6 +8,8 @@ public class ServerConfig {
     private int coreThreadNum;
     private long keepAliveTime;
     private int blockingQueueSize;
+    //缓冲区大小
+    private int bufferSize;
     private static final int DEFAULT_port = 80;
 
     public ServerConfig(){
@@ -24,6 +26,8 @@ public class ServerConfig {
         this.keepAliveTime = 60;
         //阻塞队列容量
         this.blockingQueueSize = 50;
+        //缓冲区大小
+        this.bufferSize = 1024;
     }
     public int getPort() {
         return port;
@@ -63,5 +67,13 @@ public class ServerConfig {
 
     public void setBlockingQueueSize(int blockingQueueSize) {
         this.blockingQueueSize = blockingQueueSize;
+    }
+
+    public int getBufferSize() {
+        return bufferSize;
+    }
+
+    public void setBufferSize(int bufferSize) {
+        this.bufferSize = bufferSize;
     }
 }

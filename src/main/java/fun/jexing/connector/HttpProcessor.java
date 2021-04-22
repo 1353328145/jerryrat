@@ -22,10 +22,26 @@ public class HttpProcessor implements Runnable{
             e.printStackTrace();
         }
     }
+    private RequestStringParser getParser(){
+        StringBuilder sb = new StringBuilder();
+        int bufferSize = connector.getConfig().getBufferSize();
+        byte[] buffer = new byte[bufferSize];
+        int len;
+        try {
+            while ((len = input.read(buffer))!= -1){
+                sb.append(new String(buffer,0,len));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new RequestStringParser(sb);
+    }
     private void parseConnection(){
 
     }
     private void parseRequest(){
+        //从inputStream读出数据并解析
+        RequestStringParser parser = getParser();
 
     }
     private void parseHeaders(){
@@ -35,28 +51,19 @@ public class HttpProcessor implements Runnable{
         Request request = new Request();
         Response response = new Response(output);
         response.setRequest(request);
+        //解析请求
+        parseRequest();
         //如果保持连接
-        if (isKeepAlive){
+//        if (!isKeepAlive){
             try {
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+//        }
     }
 
     public void run() {
-        try {
-            BufferedInputStream stream = new BufferedInputStream(socket.getInputStream());
-            byte[] arr = new byte[2048];
-            int len;
-            while ((len = stream.read(arr)) != -1){
-                System.out.println(new String(arr,0,len));
-            }
-            System.out.println("数据被接收");
-//            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        process();
     }
 }

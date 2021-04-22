@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Request implements HttpRequest{
-    private URL url;
+    private char[] requsetChars;
     public Object getAttribute(String var1) {
         return null;
     }
