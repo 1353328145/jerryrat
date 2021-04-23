@@ -19,8 +19,6 @@ public interface HttpResponse {
 
     void setContentType(String var1);
 
-    void setBufferSize(int var1);
-
     int getBufferSize();
 
     void flushBuffer() throws IOException;

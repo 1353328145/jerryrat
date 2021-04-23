@@ -1,16 +1,23 @@
 package fun.jexing.connector;
 
+import fun.jexing.config.ServerConfig;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class Request implements HttpRequest{
     private RequestStringParser parser;
     private Cookie[] cookies;
+    private ServerConfig serverConfig;
+    private Socket socket;
+
     public RequestStringParser getParser() {
         return parser;
     }
@@ -27,107 +34,82 @@ public class Request implements HttpRequest{
         this.cookies = cookies;
     }
 
-    public Object getAttribute(String var1) {
-        return null;
+    public ServerConfig getServerConfig() {
+        return serverConfig;
     }
 
-    public Enumeration getAttributeNames() {
-        return null;
+    public void setServerConfig(ServerConfig serverConfig) {
+        this.serverConfig = serverConfig;
     }
 
-    public String getCharacterEncoding() {
-        return null;
-    }
 
-    public void setCharacterEncoding(String var1) throws UnsupportedEncodingException {
-
-    }
-
+    @Override
     public int getContentLength() {
-        return 0;
+        String s = parser.getHeaderMap().get(HeaderUtil.CONTENT_LENGTH_NAME);
+        return s == null? -1 : Integer.parseInt(s);
     }
 
+    @Override
     public String getContentType() {
-        return null;
+        return parser.getHeaderMap().get(HeaderUtil.CONTENT_TYPE_NAME);
     }
 
+    @Override
     public String getParameter(String var1) {
-        return null;
+        return parser.getParameterMap().get(var1);
     }
 
-    public Enumeration getParameterNames() {
-        return null;
+    @Override
+    public Set<String> getParameterNames() {
+        return parser.getParameterMap().keySet();
     }
 
-    public String[] getParameterValues(String var1) {
-        return new String[0];
-    }
-
-    public Map getParameterMap() {
-        return null;
-    }
-
+    @Override
     public String getProtocol() {
-        return null;
+        return parser.getProtocol();
     }
 
-    public String getServerName() {
-        return null;
-    }
-
+    @Override
     public int getServerPort() {
-        return 0;
+        return serverConfig.getPort();
     }
 
-    public BufferedReader getReader() throws IOException {
-        return null;
-    }
-
+    @Override
     public String getRemoteAddr() {
-        return null;
+        return socket.getInetAddress().toString();
     }
 
+    @Override
     public String getRemoteHost() {
-        return null;
+        return socket.getInetAddress().toString();
     }
 
-    public void setAttribute(String var1, Object var2) {
-
-    }
-
-    public void removeAttribute(String var1) {
-
-    }
-
-    public Locale getLocale() {
-        return null;
-    }
-
-    public Enumeration getLocales() {
-        return null;
-    }
-
-    public boolean isSecure() {
-        return false;
-    }
-
-    public String getRealPath(String var1) {
-        return null;
-    }
-
+    @Override
     public int getRemotePort() {
-        return 0;
+        return socket.getPort();
     }
 
-    public String getLocalName() {
-        return null;
+    @Override
+    public String getMethod() {
+        return parser.getMethod();
     }
 
-    public String getLocalAddr() {
-        return null;
+    @Override
+    public String getRequestURI() {
+        return parser.getUrl();
     }
 
-    public int getLocalPort() {
-        return 0;
+    @Override
+    public String getHeader(String name) {
+        return parser.getHeaderMap().get(name);
+    }
+
+    @Override
+    public Set<String> getHeaderNames() {
+        return parser.getHeaderMap().keySet();
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
 }

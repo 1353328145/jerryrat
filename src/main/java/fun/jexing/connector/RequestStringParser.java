@@ -1,8 +1,7 @@
 package fun.jexing.connector;
 
-
-import com.sun.xml.internal.ws.api.message.Header;
-
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,11 +15,13 @@ public class RequestStringParser {
     private Map<String,String> headerMap;
     //当请求为post时
     private String body;
+    private String ec;
     private boolean isPost;
-    public RequestStringParser(StringBuilder sb){
+    public RequestStringParser(StringBuilder sb,String ec){
         this.sb = sb;
-        parameterMap = new HashMap<String, String>();
-        headerMap = new HashMap<String, String>();
+        parameterMap = new HashMap<>();
+        headerMap = new HashMap<>();
+        this.ec = ec;
         parse();
     }
     public int requestLine(){
@@ -79,6 +80,13 @@ public class RequestStringParser {
         }
         value = sb.substring(left,right);
         parameterMap.put(name,value);
+        if ("GET".equals(method)){
+            for (String s : parameterMap.keySet()) {
+                try {
+                    parameterMap.put(s, URLDecoder.decode(parameterMap.get(s),ec));
+                } catch (UnsupportedEncodingException ignored) {}
+            }
+        }
     }
     public void parse(){
         int lastIndex = requestLine() + 2;

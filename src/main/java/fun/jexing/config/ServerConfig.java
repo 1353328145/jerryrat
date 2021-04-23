@@ -11,7 +11,8 @@ public class ServerConfig {
     //缓冲区大小
     private int bufferSize;
     private static final int DEFAULT_port = 80;
-
+    private String webRoot;
+    private String ec;
     public ServerConfig(){
         this(DEFAULT_port);
     }
@@ -28,7 +29,20 @@ public class ServerConfig {
         this.blockingQueueSize = 50;
         //缓冲区大小
         this.bufferSize = 1024;
+        //默认静态资源
+        this.webRoot = ServerConfig.class.getClassLoader().getResource("web").getPath();
+        //编码
+        this.ec = "UTF-8";
     }
+
+    public void setEc(String ec) {
+        this.ec = ec;
+    }
+
+    public String getEc() {
+        return ec;
+    }
+
     public int getPort() {
         return port;
     }
@@ -75,5 +89,13 @@ public class ServerConfig {
 
     public void setBufferSize(int bufferSize) {
         this.bufferSize = bufferSize;
+    }
+
+    public void setWebRoot(String webRoot) {
+        this.webRoot = webRoot;
+    }
+
+    public String getWebRoot() {
+        return webRoot;
     }
 }
