@@ -1,35 +1,24 @@
 package fun.jexing.connector;
 
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Locale;
 
 public interface HttpResponse {
+    //获取数据之外的其他信息
+    public StringBuffer getFinishResult();
+
+    void setStatus(int status);
+
+    void setMsg(String msg);
+
     String getCharacterEncoding();
 
     String getContentType();
 
-    //ServletOutputStream getOutputStream() throws IOException;
-
-    PrintWriter getWriter() throws IOException;
+    PrintWriter getWriter();
 
     void setCharacterEncoding(String var1);
 
     void setContentLength(int var1);
 
     void setContentType(String var1);
-
-    int getBufferSize();
-
-    void flushBuffer() throws IOException;
-
-    void resetBuffer();
-
-    boolean isCommitted();
-
-    void reset();
-
-    void setLocale(Locale var1);
-
-    Locale getLocale();
 }

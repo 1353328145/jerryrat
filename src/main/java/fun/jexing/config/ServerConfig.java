@@ -1,5 +1,8 @@
 package fun.jexing.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ServerConfig {
     //端口
     private int port;
@@ -13,6 +16,10 @@ public class ServerConfig {
     private static final int DEFAULT_port = 80;
     private String webRoot;
     private String ec;
+    //Component配置
+    private Map<String,String> componentMap;
+    //注解扫描包路径
+    private String scanPath;
     public ServerConfig(){
         this(DEFAULT_port);
     }
@@ -33,6 +40,16 @@ public class ServerConfig {
         this.webRoot = ServerConfig.class.getClassLoader().getResource("web").getPath();
         //编码
         this.ec = "UTF-8";
+        //初始化
+        componentMap = new HashMap<>();
+    }
+
+    public String getScanPath() {
+        return scanPath;
+    }
+
+    public void setScanPath(String scanPath) {
+        this.scanPath = scanPath;
     }
 
     public void setEc(String ec) {
@@ -97,5 +114,12 @@ public class ServerConfig {
 
     public String getWebRoot() {
         return webRoot;
+    }
+
+    public Map<String, String> getComponentMap() {
+        return componentMap;
+    }
+    public void setComponent(String url,String path){
+        this.componentMap.put(url,path);
     }
 }

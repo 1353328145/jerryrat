@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+/**
+ * HTTP date format.
+ */
 public class DateTool {
-    /**
-     * HTTP date format.
-     */
     protected static SimpleDateFormat format =
             new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US);
     static {

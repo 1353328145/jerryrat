@@ -1,16 +1,13 @@
 package fun.jexing.connector;
 
+import fun.jexing.container.Context;
 import fun.jexing.utils.DateTool;
+import fun.jexing.utils.Logger;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class HttpProcessor implements Runnable{
@@ -20,6 +17,7 @@ public class HttpProcessor implements Runnable{
     private RequestStringParser parser;
     private BufferedInputStream input;
     private OutputStream output;
+    private Context context;
     private boolean finish;
     HttpProcessor(HttpConnector connector,Socket socket){
         finish = true;
@@ -32,6 +30,11 @@ public class HttpProcessor implements Runnable{
             e.printStackTrace();
         }
     }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
     private RequestStringParser getParser() throws IOException {
         StringBuilder sb = new StringBuilder();
         int bufferSize = connector.getConfig().getBufferSize();
@@ -41,13 +44,16 @@ public class HttpProcessor implements Runnable{
         if (len <= 0){
             input.close();
             socket.close();
+            Logger.log("异常请求关闭客户端连接...",HttpProcessor.class);
             throw new IOException();
         }
         sb.append(new String(buffer,0,len, ec));
         return new RequestStringParser(sb,ec);
     }
-    public void process(){
+    private void ackOptions(){
 
+    }
+    public void process(){
         //创建响应对象
         Response response = new Response(output);
         try {
@@ -55,6 +61,10 @@ public class HttpProcessor implements Runnable{
             Request request = new Request();
             //解析请求 , 从inputStream读出数据并解析
             parser = getParser();
+            Logger.log("收到客户端请求: " + parser.getMethod() + " - " + parser.getUrl(),HttpProcessor.class);
+            if ("OPTIONS".equals(parser.getMethod())){
+                ackOptions();
+            }
             request.setParser(parser);
             request.setServerConfig(connector.getConfig());
             request.setSocket(socket);
@@ -79,10 +89,19 @@ public class HttpProcessor implements Runnable{
                     ack();
                 }
             }
-            response.setHeader("Date", DateTool.currentData());
-            response.setHeader("Server", "jerryrat/0.1");
-            response.setHeader(HeaderUtil.CONNECTION_NAME, HeaderUtil.CONNECTION_CLOSE_VALUE);
-            response.staticResourceResponse(parser.getUrl());
+            String url = parser.getUrl();
+            if (context.exist(url)){
+                try {
+                    context.invoke(request,response);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    response.setStatus(500);
+                    response.setMsg(e.toString());
+                    response.finishResponse();
+                }
+            }else{
+                response.staticResourceResponse(url);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }finally {
