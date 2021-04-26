@@ -9,11 +9,14 @@ import org.reflections.Reflections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ComponentContext implements Context{
     private Map<String,Wrapper> components;
+    private ConcurrentHashMap<String,HttpSession> sessionMap;
     public ComponentContext(ServerConfig config){
         components = new HashMap<>();
+        sessionMap = new ConcurrentHashMap<>();
         Logger.log("初始化Component容器", ComponentContext.class);
         init(config);
     }
@@ -71,13 +74,23 @@ public class ComponentContext implements Context{
             components.put(url,instance);
         }
     }
-    @Override
-    public Context getContext() {
-        return this;
-    }
 
     @Override
     public boolean exist(String url) {
         return components.containsKey(url);
+    }
+
+    @Override
+    public HttpSession getSession(String sessionId) {
+        if (sessionId == null){
+            return null;
+        }
+        HttpSession httpSession =sessionMap.get(sessionId);
+        if (httpSession == null){
+            HttpSession value = new HttpSessionImpl();
+            sessionMap.put(sessionId, value);
+            return value;
+        }
+        return httpSession;
     }
 }

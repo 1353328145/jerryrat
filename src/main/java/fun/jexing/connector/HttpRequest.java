@@ -1,5 +1,8 @@
 package fun.jexing.connector;
 
+import fun.jexing.container.Context;
+import fun.jexing.container.HttpSession;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -35,4 +38,8 @@ public interface HttpRequest {
     String getHeader(String name);
 
     Set<String> getHeaderNames();
+
+    HttpSession getSession();
+
+    Context getContext();
 }

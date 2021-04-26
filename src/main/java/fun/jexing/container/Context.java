@@ -11,10 +11,10 @@ public interface Context {
     //加载组件
     void init(ServerConfig config);
 
-    //返回自己
-    Context getContext();
-
     //判断url是否存在
     boolean exist(String url);
+
+    //获取session
+    HttpSession getSession(String sessionId);
 
 }

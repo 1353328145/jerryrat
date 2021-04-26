@@ -1,6 +1,8 @@
 package fun.jexing.connector;
 
 import fun.jexing.config.ServerConfig;
+import fun.jexing.container.Context;
+import fun.jexing.container.HttpSession;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +19,15 @@ public class Request implements HttpRequest{
     private Cookie[] cookies;
     private ServerConfig serverConfig;
     private Socket socket;
+    private Context context;
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public Context getContext() {
+        return context;
+    }
 
     public RequestStringParser getParser() {
         return parser;
@@ -109,7 +120,25 @@ public class Request implements HttpRequest{
         return parser.getHeaderMap().keySet();
     }
 
+    @Override
+    public HttpSession getSession() {
+        Cookie cookie = getSessionIdCookie();
+        if (cookie == null){
+            return null;
+        }
+        return context.getSession(cookie.getValue());
+    }
+
     public void setSocket(Socket socket) {
         this.socket = socket;
+    }
+
+    public Cookie getSessionIdCookie(){
+        for (Cookie c : cookies) {
+            if (HttpProcessor.SESSIONID.equals(c.getName())){
+                return c;
+            }
+        }
+        return null;
     }
 }

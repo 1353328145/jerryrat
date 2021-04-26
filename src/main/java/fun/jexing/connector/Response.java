@@ -25,7 +25,6 @@ public class Response implements HttpResponse{
     private String dot = ".";
     private String msg404 = "<h1>404 not found</h1>";
     private ServerConfig config;
-
     public void finishResponse(){
         boolean f = msg != null;
         if (f){
@@ -43,7 +42,7 @@ public class Response implements HttpResponse{
     }
     public StringBuffer getFinishResult(){
         //日期
-        setHeader("Date", DateTool.currentData());
+        setHeader("Date", DateTool.currentDate());
         //服务器名称
         setHeader("Server", "jerryrat/0.1");
         //关闭连接请求头

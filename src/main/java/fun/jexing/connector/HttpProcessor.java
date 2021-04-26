@@ -8,7 +8,9 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.OutputStream;;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.UUID;
 
 public class HttpProcessor implements Runnable{
     private HttpConnector connector;
@@ -18,6 +20,7 @@ public class HttpProcessor implements Runnable{
     private BufferedInputStream input;
     private OutputStream output;
     private Context context;
+    public static String SESSIONID = "jsession";
     private boolean finish;
     HttpProcessor(HttpConnector connector,Socket socket){
         finish = true;
@@ -51,7 +54,11 @@ public class HttpProcessor implements Runnable{
         return new RequestStringParser(sb,ec);
     }
     private void ackOptions(){
-
+        try {
+            output.write("HTTP/1.1 200 OK\r\nAllow: GET,POST,OPTIONS\r\n\r\n".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void process(){
         //创建响应对象
@@ -64,10 +71,12 @@ public class HttpProcessor implements Runnable{
             Logger.log("收到客户端请求: " + parser.getMethod() + " - " + parser.getUrl(),HttpProcessor.class);
             if ("OPTIONS".equals(parser.getMethod())){
                 ackOptions();
+                return;
             }
             request.setParser(parser);
             request.setServerConfig(connector.getConfig());
             request.setSocket(socket);
+            request.setContext(context);
             response.setRequest(request);
             response.setConfig(connector.getConfig());
             Map<String, String> headerMap = parser.getHeaderMap();
@@ -76,6 +85,13 @@ public class HttpProcessor implements Runnable{
             if (cookie != null){
                 Cookie[] cookies = Cookie.parseCookieHeader(cookie);
                 request.setCookies(cookies);
+                if (request.getSessionIdCookie() == null){
+                    //设置cookie
+                    createSessionCookie(response);
+                }
+            }else{
+                //设置cookie
+                createSessionCookie(response);
             }
             //判断是否关闭连接
             boolean isHttp11 = "HTTP/1.1".equals(parser.getProtocol());
@@ -102,8 +118,7 @@ public class HttpProcessor implements Runnable{
             }else{
                 response.staticResourceResponse(url);
             }
-        }catch (Exception e){
-            e.printStackTrace();
+        }catch (Exception ignored){
         }finally {
             //直接关闭
             try {
@@ -114,7 +129,11 @@ public class HttpProcessor implements Runnable{
             }
         }
     }
-
+    private void createSessionCookie(Response response){
+        Cookie cookie = new Cookie(SESSIONID,UUID.randomUUID().toString());
+        cookie.setHttpOnly(true);
+        response.setHeader("Set-Cookie",cookie.toString());
+    }
     /**
      * 发送确认消息
      */

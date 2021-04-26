@@ -14,9 +14,12 @@ public class DateTool {
     static {
         format.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
-    public static String currentData(){
+    public static String currentDate(){
         Date date  =new Date();
-        String format = DateTool.format.format(date);
-        return format;
+        return DateTool.format.format(date);
+    }
+
+    public static String getDateString(Date date){
+        return DateTool.format.format(date);
     }
 }
