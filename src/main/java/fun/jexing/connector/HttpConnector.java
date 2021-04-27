@@ -33,7 +33,7 @@ public class HttpConnector {
                 TimeUnit.SECONDS,
                 new LinkedBlockingQueue<Runnable>(config.getBlockingQueueSize()),
                 new ThreadPoolExecutor.AbortPolicy());//超出抛异常
-        Logger.log("初始化线程池-->核心线程最大值:"+coreThreadNum + "线程最大值:"+maxThreadNum + "非核心线程存活时间:" + keepAliveTime,HttpConnector.class);
+        Logger.log("初始化线程池-->核心线程最大值:"+coreThreadNum + " 线程最大值:"+maxThreadNum + " 非核心线程存活时间:" + keepAliveTime,HttpConnector.class);
     }
 
     public void setContext(Context context) {
