@@ -42,4 +42,6 @@ public interface HttpRequest {
     HttpSession getSession();
 
     Context getContext();
+
+    Cookie[] getCookie();
 }

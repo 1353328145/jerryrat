@@ -14,7 +14,9 @@ public class ServerConfig {
     //缓冲区大小
     private int bufferSize;
     private static final int DEFAULT_port = 80;
+    //默认静态资源路径
     private String webRoot;
+    //编码格式 默认utf-8
     private String ec;
     //Component配置
     private Map<String,String> componentMap;

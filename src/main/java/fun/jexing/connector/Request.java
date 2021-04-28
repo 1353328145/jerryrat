@@ -3,15 +3,7 @@ package fun.jexing.connector;
 import fun.jexing.config.ServerConfig;
 import fun.jexing.container.Context;
 import fun.jexing.container.HttpSession;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.Socket;
-import java.net.URL;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 public class Request implements HttpRequest{
@@ -27,6 +19,11 @@ public class Request implements HttpRequest{
 
     public Context getContext() {
         return context;
+    }
+
+    @Override
+    public Cookie[] getCookie() {
+        return cookies;
     }
 
     public RequestStringParser getParser() {

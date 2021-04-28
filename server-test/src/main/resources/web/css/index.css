@@ -1,0 +1,107 @@
+ul,li{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+.box-top{
+    background-color: #8D0505;
+    width: 100%;
+    height: 35px;
+
+}
+#logo{
+    margin-left: 10%;
+}
+.font1{
+    color: aliceblue;
+    font-size: 18px;
+    float: right;
+    margin-right: 30px;
+}
+#map{
+    background-color: #D3D1D1;
+    height: 43px;
+}
+#map li{
+    display: inline-block;
+    width:114px;
+	height:100%;
+	line-height:43px;
+	font-size:16px;
+	color:black;
+    text-align:center;
+}
+/* 轮播图 */
+.slideshow{
+    position: relative;
+}
+.left{
+    position: absolute;
+    top: 170px;
+    left: 5%;
+    width: 40px;
+    height: 90px;
+    background-image: url(../img/focus_btn.png);
+}
+.right{
+    position: absolute;
+    top: 170px;
+    right: 5%;
+    width: 40px;
+    height: 90px;
+    background-image: url(../img/focus_btn.png);
+    background-position: -40px 0px;
+}
+.title{
+    display: inline-block;
+    font-size: 17px;
+    line-height:50px;
+    width: 90px;
+}
+.more{
+    color: darkgray;
+    font-size: 10px;
+    margin-left: 50px;
+}
+.notice li{
+    font-size: 14px;
+    margin-top: 5px;
+}
+.notice span{
+    margin-left: 20px;
+}
+.font2{
+    font-size: 18px;
+    font-weight: bolder;
+}
+.menu{
+    width: 130px;
+    height: 100px;
+    border: 2px solid #D3D1D1;
+    border-radius: 4px;
+    background-color: #F8F8F8;
+    margin-left: 20px;
+}
+.menu img{
+    width: 100%;
+    height: 100%;
+}
+.about{
+    background-color: #DDDDDD;
+}
+.about img{
+    width: 70px;
+    height: 70px;
+}
+.info{
+    display: inline;
+}
+.font3{
+    color: darkolivegreen;
+    font-size: 14px;
+}
+.bottom{
+    background-color: #8D0505;
+    width: 100%;
+    height: 35px;
+}

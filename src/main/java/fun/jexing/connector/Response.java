@@ -28,7 +28,7 @@ public class Response implements HttpResponse{
     public void finishResponse(){
         boolean f = msg != null;
         if (f){
-            setContentLength(msg.length());
+            setContentLength(msg.getBytes().length);
         }
         StringBuffer res = getFinishResult();
         if (f){
@@ -92,6 +92,7 @@ public class Response implements HttpResponse{
     public Response(OutputStream output){
         this.output = output;
         contentLength = -1;
+        status = 200;
         headerMap = new HashMap<>();
     }
 
