@@ -33,6 +33,8 @@
 
     -  注解扫描功能,依赖了reflections包,之后可能会改成自己的实现
     
+    -  默认的静态资源根目录是maven项目resources目录下的web目录，可以通过SeverConfig修改
+    
 - 其他
     
     推荐《深入剖析tomcat》这本书，讲的很不错
