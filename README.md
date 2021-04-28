@@ -2,8 +2,8 @@
 
 - 基本介绍
 
-    本项目是一个嵌入式的web容器，基于java的bio阻塞式通信,封装了http请求,可提供HttpRequest 和 HttpResponse对象供实现了Component接口的组件使用
-实现了通过url对静态资源和处理请求的组件( = servlet) 的访问，因为这是简单的实现，所以可能很多复杂的功能后没有做或者做的不完整
+    本项目是一个嵌入式的web容器，基于java的bio阻塞式通信,封装了http请求,可提供HttpRequest 和 HttpResponse对象供实现了Component接口的组件使用。
+实现通过url对静态资源和处理请求的组件( = servlet) 的访问，因为这是简单的实现，所以可能很多复杂的功能没有做或者做的不完整
 
 - 目录介绍
 
