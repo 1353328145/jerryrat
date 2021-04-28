@@ -6,6 +6,7 @@
 
     <groupId>fun.jexing</groupId>
     <artifactId>jerryrat</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -19,6 +20,9 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>server-test</module>
+    </modules>
 
     <dependencies>
         <dependency>
@@ -26,11 +30,5 @@
             <artifactId>reflections</artifactId>
             <version>0.9.11</version>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>com.google.guava</groupId>-->
-<!--            <artifactId>guava</artifactId>-->
-<!--            <version>21.0</version>-->
-<!--        </dependency>-->
     </dependencies>
 </project>

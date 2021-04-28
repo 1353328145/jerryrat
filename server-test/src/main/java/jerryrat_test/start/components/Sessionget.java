@@ -1,4 +1,4 @@
-package fun.jexing;
+package jerryrat_test.start.components;
 
 import fun.jexing.annotation.HttpComponent;
 import fun.jexing.connector.HttpRequest;
@@ -8,16 +8,18 @@ import fun.jexing.container.HttpSession;
 
 import java.io.PrintWriter;
 
-@HttpComponent(url = "/sessionVal")
-public class SessionTest implements Component {
+@HttpComponent(url = "/get")
+public class Sessionget implements Component {
+
     @Override
     public void service(HttpRequest request, HttpResponse response) {
-        response.setContentType("application/json; charset=UTF-8");
         HttpSession session = request.getSession();
+        //获取session
+        Object hello = session.get("hello");
         PrintWriter writer = response.getWriter();
         writer.print(response.getFinishResult());
         writer.flush();
-        writer.print("{ \"code\" : \"200\" , \"msg\" : \""+session.get("hello")+"\" }");
+        writer.println("{ \"sessionVal\" : \""+hello+"\" }");
         writer.flush();
     }
 }

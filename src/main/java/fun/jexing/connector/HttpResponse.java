@@ -21,4 +21,6 @@ public interface HttpResponse {
     void setContentLength(int var1);
 
     void setContentType(String var1);
+
+    void finishResponse();
 }

@@ -130,9 +130,12 @@ public class HttpProcessor implements Runnable{
         }
     }
     private void createSessionCookie(Response response){
-        Cookie cookie = new Cookie(SESSIONID,UUID.randomUUID().toString());
+        String value = UUID.randomUUID().toString();
+        Cookie cookie = new Cookie(SESSIONID, value);
         cookie.setHttpOnly(true);
         response.setHeader("Set-Cookie",cookie.toString());
+        //创建在context中创建session对象
+        context.getSession(value);
     }
     /**
      * 发送确认消息
