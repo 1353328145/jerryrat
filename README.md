@@ -2,8 +2,8 @@
 
 - 基本介绍
 
-    本项目是一个嵌入式的web容器，基于java的bio阻塞式通信,封装了http请求,可提供HttpRequest 和 HttpResponse对象供实现了Component接口的组件使用
-实现了通过url对静态资源和处理请求的组件( = servlet) 的访问，因为这是简单的实现，所以可能很多复杂的功能后没有做或者做的不完整
+    本项目是一个嵌入式的web容器，基于java的bio阻塞式通信,封装了http请求,可提供HttpRequest 和 HttpResponse对象供实现了Component接口的组件使用。
+实现通过url对静态资源和处理请求的组件( = servlet) 的访问，因为这是简单的实现，所以可能很多复杂的功能没有做或者做的不完整
 
 - 目录介绍
 
@@ -32,6 +32,8 @@
     -  总体来说项目基于线程池,线程池和其他参数都在ServerConfig中配置,需要使用时传入
 
     -  注解扫描功能,依赖了reflections包,之后可能会改成自己的实现(已修改)
+    
+    -  默认的静态资源根目录是maven项目resources目录下的web目录，可以通过SeverConfig修改
     
 - 其他
     
