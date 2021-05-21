@@ -5,9 +5,7 @@ import fun.jexing.config.ServerConfig;
 import fun.jexing.connector.HttpRequest;
 import fun.jexing.connector.HttpResponse;
 import fun.jexing.utils.Logger;
-import org.reflections.Reflections;
-
-import java.util.Arrays;
+import fun.jexing.utils.ReflectionTool;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -64,15 +62,8 @@ public class ComponentContext implements Context{
     }
     //注解组件
     private void initAnnotation(String path) throws IllegalAccessException, InstantiationException {
-        Reflections f = new Reflections(path);
-        Set<Class<?>> set = f.getTypesAnnotatedWith(HttpComponent.class);
+        Set<Class<?>> set = ReflectionTool.getClassByAnnotation(HttpComponent.class, path);
         for (Class<?> aClass : set) {
-            Class<?>[] interfaces = aClass.getInterfaces();
-            if (Arrays.stream(interfaces).filter(s ->
-                    "fun.jexing.container.Component".equals(s.getName())).count()!=1){
-                //没有实现Component接口,跳过
-                continue;
-            }
             HttpComponent annotation = aClass.getAnnotation(HttpComponent.class);
             String url = annotation.url();
             if ("".equals(url)){ continue; }
