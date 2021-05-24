@@ -13,6 +13,8 @@ public interface HttpRequest {
         return "UTF-8";
     }
 
+    String getRequestBody();
+
     int getContentLength();
 
     String getContentType();
