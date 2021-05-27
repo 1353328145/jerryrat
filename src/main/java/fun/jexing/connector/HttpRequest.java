@@ -13,6 +13,8 @@ public interface HttpRequest {
         return "UTF-8";
     }
 
+    String getRequestBody();
+
     /**
      * 转发url
      * @param url

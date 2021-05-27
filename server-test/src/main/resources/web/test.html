@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试ajax</title>
+    <script src="js/jq.js"></script>
+</head>
+<body>
+    <input type="text" id="queryInfo">
+    <button id="search" >搜索</button>
+    <div id="data">
+
+    </div>
+</body>
+<script>
+    $("#search").click(function () {
+        let query = $("#queryInfo").val();
+        $.ajax({
+            url:'loadUser',
+            method:'post',
+            data:{
+                username:query
+            },
+            success(data){
+                alert(data);
+                $("#data").append("<div>"+data.username+"</div><br>").append("<div>"+data.name+"</div><br>").append("<div>"+data.age+"</div><br>")
+            }
+        })
+    })
+</script>
+</html>

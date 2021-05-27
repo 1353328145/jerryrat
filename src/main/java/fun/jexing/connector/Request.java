@@ -71,6 +71,11 @@ public class Request implements HttpRequest{
     }
 
     @Override
+    public String getRequestBody() {
+        return parser.getBody();
+    }
+
+    @Override
     public int getContentLength() {
         String s = parser.getHeaderMap().get(HeaderUtil.CONTENT_LENGTH_NAME);
         return s == null? -1 : Integer.parseInt(s);

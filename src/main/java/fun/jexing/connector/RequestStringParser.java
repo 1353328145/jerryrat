@@ -107,7 +107,7 @@ public class RequestStringParser {
             this.body = sb.substring(newIndex);
             String s = headerMap.get(HeaderUtil.CONTENT_TYPE_NAME);
             //post请求中body数据是xxx=xxx&xxx=xxx格式
-            if (isPost && s != null && "application/x-www-from-urlencoded".equals(s)){
+            if (isPost && s != null && s.startsWith("application/x-www-form-urlencoded")){
                 //解析到parameterMap中
                 parseUrlParameter(newIndex,sb.length());
             }
