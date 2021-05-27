@@ -29,7 +29,12 @@ public class ComponentContext implements Context{
     }
     @Override
     public void invoke(HttpRequest request, HttpResponse response) {
-        Wrapper wrapper = components.get(request.getRequestURI());
+        invoke(request.getRequestURI(),request,response);
+    }
+
+    @Override
+    public void invoke(String url, HttpRequest request, HttpResponse response) {
+        Wrapper wrapper = components.get(url);
         wrapper.service(request,response);
     }
 

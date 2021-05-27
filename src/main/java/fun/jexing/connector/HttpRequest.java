@@ -13,6 +13,12 @@ public interface HttpRequest {
         return "UTF-8";
     }
 
+    /**
+     * 转发url
+     * @param url
+     */
+    boolean forward(String url,HttpRequest request,HttpResponse response);
+
     int getContentLength();
 
     String getContentType();

@@ -3,6 +3,8 @@ package fun.jexing.connector;
 import fun.jexing.config.ServerConfig;
 import fun.jexing.container.Context;
 import fun.jexing.container.HttpSession;
+import fun.jexing.utils.HeaderUtil;
+
 import java.net.Socket;
 import java.util.Set;
 
@@ -17,6 +19,7 @@ public class Request implements HttpRequest{
         this.context = context;
     }
 
+    @Override
     public Context getContext() {
         return context;
     }
@@ -50,6 +53,22 @@ public class Request implements HttpRequest{
         this.serverConfig = serverConfig;
     }
 
+
+    @Override
+    public boolean forward(String url,HttpRequest request,HttpResponse response) {
+        if (url == null){
+            return false;
+        }
+        //如果容器中存在则调用容器方法
+        if (context.exist(url)){
+            context.invoke(url,request,response);
+        }else{
+            //否则查找静态资源
+            Response rootResponse = (Response)response;
+            rootResponse.staticResourceResponse(url);
+        }
+        return true;
+    }
 
     @Override
     public int getContentLength() {
@@ -131,6 +150,9 @@ public class Request implements HttpRequest{
     }
 
     public Cookie getSessionIdCookie(){
+        if (cookies == null){
+            return null;
+        }
         for (Cookie c : cookies) {
             if (HttpProcessor.SESSIONID.equals(c.getName())){
                 return c;

@@ -34,7 +34,8 @@ public class ReflectionTool {
         return set;
     }
     private static void scanClass(Set<Class<?>> set,Class<? extends Annotation> annotation,String packagePath, StringBuffer refPath) throws ClassNotFoundException {
-        File[] files = new File(packagePath).listFiles( (file, name) -> (file.isFile() && name.endsWith(".class")) || file.isDirectory());
+        File[] files = new File(packagePath).listFiles(
+                (file, name) -> (file.isFile() && name.endsWith(".class")) || file.isDirectory());
         for (File file : files) {
             if (file.isDirectory()){
                 int size = refPath.length();

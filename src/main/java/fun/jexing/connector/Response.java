@@ -2,11 +2,10 @@ package fun.jexing.connector;
 
 import fun.jexing.config.ServerConfig;
 import fun.jexing.utils.DateTool;
-import fun.jexing.utils.Tool;
+import fun.jexing.utils.HeaderUtil;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class Response implements HttpResponse{
@@ -19,12 +18,13 @@ public class Response implements HttpResponse{
     private String contentType;
     private String charset;
     private int contentLength;
-    private String space = "";
+    private String space = " ";
     private String end = "\r\n";
     private String colon= ":";
     private String dot = ".";
     private String msg404 = "<h1>404 not found</h1>";
     private ServerConfig config;
+    @Override
     public void finishResponse(){
         boolean f = msg != null;
         if (f){
@@ -40,6 +40,14 @@ public class Response implements HttpResponse{
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void redirect(String url) {
+        StringBuffer finishResult = setStatus(302).setHeader(HeaderUtil.LOCATION_NAME, url).getFinishResult();
+        finishResponse();
+    }
+
+    @Override
     public StringBuffer getFinishResult(){
         //日期
         setHeader("Date", DateTool.currentDate());
@@ -96,8 +104,10 @@ public class Response implements HttpResponse{
         headerMap = new HashMap<>();
     }
 
-    public void setHeader(String name,String value){
+    @Override
+    public HttpResponse setHeader(String name, String value){
         headerMap.put(name,value);
+        return this;
     }
     public void setRequest(Request request) {
         this.request = request;
@@ -108,40 +118,45 @@ public class Response implements HttpResponse{
     }
 
     @Override
-    public void setStatus(int status) {
+    public HttpResponse setStatus(int status) {
         this.status = status;
+        return this;
     }
 
     @Override
-    public void setMsg(String msg) {
+    public HttpResponse setMsg(String msg) {
         this.msg = msg;
+        return this;
     }
-
+    @Override
     public String getCharacterEncoding() {
         return charset;
     }
-
+    @Override
     public String getContentType() {
         return contentType;
     }
-
+    @Override
     public PrintWriter getWriter() {
         if (writer == null){
             writer = new PrintWriter(output);
         }
         return writer;
     }
-
-    public void setCharacterEncoding(String var1) {
+    @Override
+    public HttpResponse setCharacterEncoding(String var1) {
         charset = var1;
+        return this;
     }
-
-    public void setContentLength(int var1) {
+    @Override
+    public HttpResponse setContentLength(int var1) {
         this.contentLength = var1;
+        return this;
     }
-
-    public void setContentType(String var1) {
+    @Override
+    public HttpResponse setContentType(String var1) {
         this.contentType = var1;
+        return this;
     }
 
     public void setConfig(ServerConfig config) {

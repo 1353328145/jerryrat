@@ -37,7 +37,7 @@ public class ServerConfig {
         //阻塞队列容量
         this.blockingQueueSize = 50;
         //缓冲区大小
-        this.bufferSize = 1024;
+        this.bufferSize = 1024 * 2;
         //默认静态资源
         this.webRoot = ServerConfig.class.getClassLoader().getResource("web").getPath();
         //编码

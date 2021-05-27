@@ -1,5 +1,7 @@
 package fun.jexing.connector;
 
+import fun.jexing.utils.HeaderUtil;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;

@@ -8,6 +8,9 @@ public interface Context {
     //调用
     void invoke(HttpRequest request, HttpResponse response);
 
+    //调用指定url的服务
+    void invoke(String url,HttpRequest request, HttpResponse response);
+
     //加载组件
     void init(ServerConfig config);
 

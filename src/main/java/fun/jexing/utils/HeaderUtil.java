@@ -1,4 +1,4 @@
-package fun.jexing.connector;
+package fun.jexing.utils;
 
 public class HeaderUtil {
     public static String ACCEPT_LANGUAGE_NAME = "Accept-Language";
@@ -11,4 +11,5 @@ public class HeaderUtil {
     public static String EXPECT_NAME = "Expect";
     public static String EXPECT_100_VALUE = "100-continue";
     public static String TRANSFER_ENCODING_NAME = "Transfer-Encoding";
+    public static String LOCATION_NAME="Location";
 }

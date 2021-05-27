@@ -1,6 +1,7 @@
 package fun.jexing.connector;
 
 import fun.jexing.container.Context;
+import fun.jexing.utils.HeaderUtil;
 import fun.jexing.utils.Logger;
 import java.io.BufferedInputStream;
 import java.io.IOException;
