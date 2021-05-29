@@ -14,6 +14,6 @@ public class TestForwardComponent implements Component {
 
     @Override
     public void service(HttpRequest request, HttpResponse response) {
-        request.forward("/indeasdasx.html",request,response);
+        request.forward("/index.html",request,response);
     }
 }
