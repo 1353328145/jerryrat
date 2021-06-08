@@ -11,13 +11,9 @@ public class AjaxHandle implements Component {
     @Override
     public void service(HttpRequest request, HttpResponse response) {
         String username = request.getParameter("username");
-        System.out.println(request.getRequestBody());
-        System.out.println(request.getHeader("Content-Type"));
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.setMsg("{\"username\":\" "+username+"\" ," +
-                " \"name\":\"zhangsan\"," +
-                "\"age\": 18}");
+        response.setMsg("{\"username\":\" "+username+"\" }");
         response.finishResponse();
     }
 }

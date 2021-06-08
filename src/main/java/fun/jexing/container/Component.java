@@ -7,6 +7,6 @@ public interface Component {
     //初始化
     default void init(){}
 
-    //服务器
+    //服务器方法
     void service(HttpRequest request, HttpResponse response);
 }

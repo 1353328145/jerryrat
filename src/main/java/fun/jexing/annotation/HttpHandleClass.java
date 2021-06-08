@@ -6,10 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Component组件注解
+ * http处理类
+ * 会被全局处理器调用
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface HttpComponent {
-    String url();
+public @interface HttpHandleClass {
+
 }

@@ -20,4 +20,6 @@ public interface Context {
     //获取session
     HttpSession getSession(String sessionId);
 
+    //获取配置
+    ServerConfig getConfig();
 }

@@ -6,10 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Component组件注解
+ * http处理方法
+ * 被标注的方法会进行路径映射，然后调用
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface HttpComponent {
+public @interface HttpMapping {
     String url();
 }

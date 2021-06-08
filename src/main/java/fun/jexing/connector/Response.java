@@ -22,7 +22,8 @@ public class Response implements HttpResponse{
     private String end = "\r\n";
     private String colon= ":";
     private String dot = ".";
-    private String msg404 = "<h1>404 not found</h1>";
+    public static String msg404 = "<h1>404 not found</h1>";
+    public static String msg500 = "<h1>Internal Server Error</h1>";
     private ServerConfig config;
     @Override
     public void finishResponse(){

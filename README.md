@@ -18,11 +18,41 @@
     
     - 可以实现根据url对component组件的访问
     
-    - 可以实现注解反射调用组件,简化配置
+    - 可以实现注解反射调用组件,简化配置。实例如下，可以实现接受一个参数然后用json格式返回
+    
+        ```java
+          @HttpComponent(url = "/loadUser")
+          public class AjaxHandle implements Component {
+          
+              @Override
+              public void service(HttpRequest request, HttpResponse response) {
+                  String username = request.getParameter("username");
+                  response.setContentType("application/json");
+                  response.setCharacterEncoding("UTF-8");
+                  response.setMsg("{\"username\":\" "+username+"\" }");
+                  response.finishResponse();
+              }
+          }
+        ```
     
     - 拦截器还未实现
     
     - 简单实现了基于cookie的HttpSession,详见server-test模块下由具体使用
+    
+    - 增加了新功能，通过方法来处理请求，类似springMVC。当加上注解后会自动扫描,但是参数是固定的，如果参数无法匹配，则会装载失败。实例如下,可以实现一个返回json数据的接口
+    
+        ```java
+            @HttpHandleClass
+            public class MappingTest {
+            
+                @HttpMapping(url = "/get")
+                public void test(HttpRequest request,HttpResponse response){
+                    response.setMsg("{\"name\":\"张三\",\"password\":\"123456\"}");
+                    response.setContentType("application/json; charset=UTF-8");
+                    response.finishResponse();
+                }
+            }
+        ```
     
 - 具体说明
 
